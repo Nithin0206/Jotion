@@ -24,13 +24,12 @@ export const Navbar = ({
   const params = useParams();
   const documentId = params.documentId;
 
-  // ✅ Only run the query if documentId is available
   const document = useQuery(
     api.document.getById,
     documentId ? { documentId: documentId as Id<"documents"> } : "skip"
   );
 
-  // ✅ Loading skeleton while fetching
+  
   if (document === undefined) {
     return (
       <nav className="bg-background dark:bg-[#1F1F1F] px-3 py-2 w-full flex items-center justify-between">
@@ -42,7 +41,7 @@ export const Navbar = ({
     );
   }
 
-  // ✅ Null check in case document doesn't exist or is unauthorized
+ 
   if (document === null) {
     return null;
   }

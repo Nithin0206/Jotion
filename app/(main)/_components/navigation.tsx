@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash,MessageSquare, CircleHelp } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -10,7 +10,7 @@ import { useMutation } from "convex/react";
 import { api } from '@/convex/_generated/api';
 import { Item } from "./item";
 import { toast } from "react-hot-toast";
-
+import { useHelp } from "@/hooks/use-help";
 
 import { DocumentList } from "./documentList";
 
@@ -23,7 +23,7 @@ import {
 import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
-// import { Navbar } from "./navbar";
+
 import { Navbar } from "./nav-bar";
 export const Navigation = () =>{
 
@@ -31,6 +31,7 @@ export const Navigation = () =>{
     const router = useRouter();
     const search = useSearch();
     const settings = useSettings();
+    const help = useHelp()
 
     const params = useParams();
     const create = useMutation(api.document.create);
@@ -134,6 +135,10 @@ export const Navigation = () =>{
         })
 
       }
+      const handleChat=()=>{
+        router.push('/chat')
+        
+      }
 
     return(
         <>
@@ -172,6 +177,8 @@ export const Navigation = () =>{
                label ="New Page"
                icon={PlusCircle}
                />
+               {/* <Item onClick={handleChat} label="Chat" icon={MessageSquare} /> */}
+               <Item onClick={help.onOpen} label="Need Help? / Share Feedback" icon ={CircleHelp} />
 
             </div>
 
@@ -213,6 +220,7 @@ export const Navigation = () =>{
           isMobile && "left-0 w-full"
         )}
         >
+        
 
 {!!params.documentId ? (
           <Navbar
@@ -225,6 +233,7 @@ export const Navigation = () =>{
           </nav>
         )}
         </div>
+        
         </>
         
     )
